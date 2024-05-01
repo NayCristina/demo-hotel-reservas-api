@@ -4,6 +4,7 @@ import com.example.demohotelreservasapi.entity.Reserva;
 import com.example.demohotelreservasapi.repository.ReservaRepository;
 import com.example.demohotelreservasapi.service.ReservaDuplicadaException;
 import com.example.demohotelreservasapi.service.ReservaService;
+import com.example.demohotelreservasapi.web.dto.ReservaCreateDto;
 import com.example.demohotelreservasapi.web.dto.ReservaResponseDto;
 import com.example.demohotelreservasapi.web.dto.mapper.ReservaMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,8 +40,6 @@ public class ReservaController {
         return ResponseEntity.ok(ReservaMapper.toDto(reserva));
     }
 
-
-
     @GetMapping("/status/{status}")
     @Operation(summary = "Listar hotéis por status de reserva ativa", description = "Listar hotéis por status de reserva ativa",
             responses = {
@@ -60,8 +60,8 @@ public class ReservaController {
                     @ApiResponse(responseCode = "400", description = "Já existe uma reserva para o mesmo hotel e período")
             }
     )
-    public ResponseEntity<String> criarReserva(@RequestBody ReservaResponseDto reservaResponseDto) {
-        ReservaResponseDto novaReserva = reservaService.criarReserva(reservaResponseDto);
+    public ResponseEntity<String> criarReserva(@Valid @RequestBody ReservaCreateDto reservaCreateDto) {
+        Reserva novaReserva = reservaService.criarReserva(ReservaMapper.toReserva(reservaCreateDto));
         return ResponseEntity.status(HttpStatus.CREATED).body("Reserva criada com sucesso! ID: " + novaReserva.getId());
     }
 

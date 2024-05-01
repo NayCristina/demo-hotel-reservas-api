@@ -2,8 +2,6 @@ package com.example.demohotelreservasapi.service;
 
 import com.example.demohotelreservasapi.entity.Reserva;
 import com.example.demohotelreservasapi.repository.ReservaRepository;
-import com.example.demohotelreservasapi.web.dto.ReservaResponseDto;
-import com.example.demohotelreservasapi.web.dto.mapper.ReservaMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -53,21 +51,9 @@ public class ReservaService {
     }*/
 
 
-    @Transactional()
-    public ReservaResponseDto criarReserva(ReservaResponseDto reservaResponseDto) {
-        Reserva reserva = new Reserva();
-
-        System.out.println(">>>>>>>>>>>>>>>>>>" + reservaResponseDto.getStatus());
-        reserva.setHotelId(reservaResponseDto.getHotelId());
-
-        reserva = reservaRepository.save(reserva);
-
-        ReservaResponseDto novaReserva = new ReservaResponseDto();
-
-        novaReserva.setHotelId(reserva.getHotelId());
-
-        return novaReserva;
-
-        //return reservaResponseDto;
+    @Transactional
+    public Reserva criarReserva(Reserva reserva) {
+        reserva.setStatus("ativa");
+        return reservaRepository.save(reserva);
     }
 }

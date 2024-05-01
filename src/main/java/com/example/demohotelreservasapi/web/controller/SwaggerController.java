@@ -1,4 +1,4 @@
-package com.example.demohotelapi.web.controller;
+package com.example.demohotelreservasapi.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class SwaggerController {
 
-    @GetMapping("/api/v1/hoteis/swagger")
+    @GetMapping("/api/v1/hoteis/reserva/swagger")
     public String redirectToSwagger() {
-        return "redirect:/docs-hotel.html";
+        return "redirect:/docs-reserva-hotel.html";
     }
 }

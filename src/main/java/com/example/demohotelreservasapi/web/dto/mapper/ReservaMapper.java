@@ -1,7 +1,9 @@
 package com.example.demohotelreservasapi.web.dto.mapper;
 
 import com.example.demohotelreservasapi.entity.Reserva;
+import com.example.demohotelreservasapi.web.dto.ReservaCreateDto;
 import com.example.demohotelreservasapi.web.dto.ReservaResponseDto;
+import org.modelmapper.ModelMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +20,11 @@ public class ReservaMapper {
         return dto;
     }
 
+    public static Reserva toReserva(ReservaCreateDto reservaCreateDto) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        return modelMapper.map(reservaCreateDto, Reserva.class);
+    }
 
     public static List<ReservaResponseDto> toListDto(List<Reserva> reservas) {
         return reservas.stream().map(ReservaMapper::toDto).collect(Collectors.toList());
