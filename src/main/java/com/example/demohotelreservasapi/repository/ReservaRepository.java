@@ -13,6 +13,8 @@ import java.util.List;
 
 @Repository
 public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
+        @Query(value = "SELECT r.* FROM reserva r JOIN hotel h ON r.hotel_id = h.id WHERE h.localizacao LIKE %:localizacao%", nativeQuery = true)
+        List<Reserva> findByLocalizacao(@Param("localizacao") String localizacao);
 
         List<Reserva> findByStatus(String status);
 

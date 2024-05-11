@@ -12,6 +12,7 @@ public class ReservaMapper {
 
     public static ReservaResponseDto toDto(Reserva reserva) {
         ReservaResponseDto dto = new ReservaResponseDto();
+        dto.setId(reserva.getId());
         dto.setCheckIn(reserva.getCheckIn());
         dto.setCheckOut(reserva.getCheckOut());
         dto.setQuartoId(reserva.getQuartoId());
@@ -32,6 +33,7 @@ public class ReservaMapper {
 
     public static Reserva toEntity(ReservaResponseDto dto) {
         Reserva reserva = new Reserva();
+        reserva.setId(dto.getId());
         reserva.setCheckIn(dto.getCheckIn());
         reserva.setCheckOut(dto.getCheckOut());
         reserva.setQuartoId(dto.getQuartoId());

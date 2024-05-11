@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,15 @@ public class ReservaService {
         List<Reserva> reservas = reservaRepository.findAll();
         if (reservas.isEmpty()) {
             throw new EntityNotFoundException("Nenhuma reserva encontrada");
+        }
+        return reservas;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Reserva> buscaReservaPorLocalizacao(String local){
+        List<Reserva> reservas = reservaRepository.findByLocalizacao(local);
+        if(reservas.isEmpty()){
+            Collections.emptyList();
         }
         return reservas;
     }
