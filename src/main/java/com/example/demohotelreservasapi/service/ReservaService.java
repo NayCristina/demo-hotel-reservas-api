@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @Service
@@ -52,5 +54,15 @@ public class ReservaService {
         }
         reserva.setStatus("ativa");
         return reservaRepository.save(reserva);
+    }
+    public void marcarReservasAtivasComoConcluidasAPartirDeHoje() {
+        LocalDate hoje = LocalDate.now();
+        List<Reserva> reservasCheckOutAntesDeHoje = reservaRepository.findByStatusAndCheckOutBefore("ativa", hoje);
+
+        List<Integer> reservaIds = reservasCheckOutAntesDeHoje.stream().map(Reserva::getId).collect(Collectors.toList());
+
+        if (!reservaIds.isEmpty()) {
+            reservaRepository.marcarReservasComoConcluidas(reservaIds);
+        }
     }
 }
