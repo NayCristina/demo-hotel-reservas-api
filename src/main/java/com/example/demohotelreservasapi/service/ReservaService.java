@@ -1,6 +1,8 @@
 package com.example.demohotelreservasapi.service;
 
 import com.example.demohotelreservasapi.entity.Reserva;
+import com.example.demohotelreservasapi.exception.ReservaDuplicadaException;
+import com.example.demohotelreservasapi.exception.ReservaNaoEncontradaException;
 import com.example.demohotelreservasapi.repository.ReservaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +42,7 @@ public class ReservaService {
     @Transactional(readOnly = true)
     public Reserva buscarPorId(int id){
         return reservaRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(String.format("Reserva id=%s não encontrado", id))
+                () -> new ReservaNaoEncontradaException((String.format("Reserva com id=%s não encontrada", id)))
         );
     }
     @Transactional

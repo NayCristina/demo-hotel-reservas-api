@@ -1,4 +1,4 @@
-    package com.example.demohotelreservasapi.service;
+    package com.example.demohotelreservasapi.exception;
 
     public class ReservaCheckoutException extends RuntimeException {
 

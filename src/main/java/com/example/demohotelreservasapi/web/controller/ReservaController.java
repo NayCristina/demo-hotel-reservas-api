@@ -78,10 +78,7 @@ public class ReservaController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Lista de reservas encontradas",
                             content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = ReservaResponseDto.class)))),
-                    @ApiResponse(responseCode = "404", description = "Nenhuma reserva encontrada nessa localização",
-                            content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Error.class))))
+                                    array = @ArraySchema(schema = @Schema(implementation = ReservaResponseDto.class))))
             })
     @GetMapping("/localizacao/{local}")
     public ResponseEntity<List<ReservaResponseDto>> getByLocation(@PathVariable String local){
@@ -96,7 +93,7 @@ public class ReservaController {
     @Operation(summary = "Criar uma nova reserva", description = "Cria uma nova reserva se não houver duplicatas",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Reserva criada com sucesso"),
-                    @ApiResponse(responseCode = "400", description = "Já existe uma reserva para o mesmo hotel e período")
+                    @ApiResponse(responseCode = "409", description = "Já existe uma reserva para o mesmo hotel e período")
             }
     )
     public ResponseEntity<String> criarReserva(@Valid @RequestBody ReservaCreateDto reservaCreateDto) {

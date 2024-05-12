@@ -12,8 +12,6 @@ import java.time.LocalDate;
 @ToString
 public class ReservaCreateDto {
     @NotBlank
-    int id;
-    @NotBlank
     private LocalDate checkIn;
     @NotBlank
     private LocalDate checkOut;
